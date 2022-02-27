@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en-GB" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<form action="/api/admin/sites" th:object="${emptySite}" method="post">
+    <div style="display: flex"><p>Name: </p> <input type="text" th:field="*{name}"></div>
+    <div style="display: flex"><p>Url: </p> <input type="text" th:field="*{url}"></div>
+    <button type="submit">Submit</button>
+</form>
+<div style="display: flex">
+    <form method="post">
+    <p>Find by name: </p>
+    <input type="text" name="name">
+    <button type="submit">Submit</button>
+    </form>
+</div>
+<div th:if="${sites != null}" th:each="site: ${sites}" style="display: flex">
+    <form action="/api/admin/sites/" th:method="put">
+        <input type="hidden" name="id" th:value="${site.id}">
+        <input type="hidden" name="status" th:value="${site.status}">
+        <input name="name" th:value="${site.name}"/>
+        <input name="url" th:value="${site.url}"/>
+        <button type="submit">Change</button>
+    </form>
+    <form th:action="'/api/admin/sites/' + ${site.id}" th:method="delete">
+        <input type="hidden" name="id" th:value="${site.id}">
+        <button type="submit">Delete</button>
+    </form>
+</div>
+</html>

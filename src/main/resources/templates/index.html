@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en-GB" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        .on {
+            background-color: green;
+        }
+
+        .off {
+            background-color: red;
+        }
+    </style>
+</head>
+<body style="display: flex; flex-direction: column">
+<div style="display: flex">
+   <p></p>
+</div>
+<h3 style="margin: auto">Ресурси для атаки</h3>
+<table>
+    <tr>
+        <td>№</td>
+        <td>Name</td>
+        <td>Url</td>
+        <td>Status</td>
+    </tr>
+    <tr th:each="site, iter: ${sites}">
+        <td th:text="${iter.index + 1}"></td>
+        <td th:text="${site.name}"></td>
+        <td th:text="${site.url}"></td>
+        <td style="width: 100px;height: 20px;" th:class="${site.status == 200 ? 'on' : 'off'}"></td>
+    </tr>
+</table>
+</body>
+</html>
