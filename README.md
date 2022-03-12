@@ -10,7 +10,7 @@
 ##### Project using Java 11
 ##### To enter an admin panel, use path {site}/admin
 ##### To see banned IPs because of DDoS attack on your site, use path {site}/admin/ips
-##### If you will use not a Heroku hosting, you can easily delete Procfile and system.properties and this part at the bottom of pom.xml
+##### If you will use not a Heroku hosting, you can easily delete Procfile, system.properties file, "server.port" field in application.properties and this part at the bottom of pom.xml
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
