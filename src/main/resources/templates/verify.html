@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en-GB" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<h3 style="margin: auto">Модерація запропонованих сайтів</h3>
+<p>Очікує -
+    <th:block th:text="${sites.size()}"></th:block>
+</p>
+
+<div th:each="site: ${sites}" style="display: flex; align-items: center">
+    <form action="/api/admin/sites/" th:method="put" style="display: flex;align-items: center;">
+        <input type="hidden" name="id" th:value="${site.id}">
+        <input type="hidden" name="online" th:value="${site.online}">
+        <input type="hidden" name="verified" th:value="true"/>
+        <div style="display: flex"><p>Ім`я -  <input name="name" th:value="${site.name}"/></p></div>
+        <div style="display: flex; margin-left: 20px"><p>Посилання -   <input name="url" th:value="${site.url}"/></p></div>
+        <button style="margin-left: 20px" type="submit">Додати</button>
+    </form>
+    <form th:action="'/api/admin/sites/' + ${site.id}" th:method="delete">
+        <input type="hidden" name="id" th:value="${site.id}">
+        <button style="margin-left: 20px" type="submit">Видалити</button>
+    </form>
+</div>
+</html>

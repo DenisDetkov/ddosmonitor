@@ -10,5 +10,13 @@ import java.util.List;
 public class SiteService extends DefaultService<Site, SiteRepository>{
     public List<Site> getByName(String name){return jpaRepository.getByName(name);}
 
+    public List<Site> getByUrl(String url){return jpaRepository.getByUrl(url);}
+
+    public List<Site> getByUrlAndOnline(String url, boolean online){return jpaRepository.getByUrlAndOnline(url, online);}
+
     public List<Site> findAll(){return jpaRepository.findAll();}
+
+    public List<Site> findAllCanPing(){return jpaRepository.findAllCanPing();}
+
+    public List<Site> findAllUnverified(){return jpaRepository.findAllUnverified();}
 }

@@ -17,6 +17,22 @@ public interface SiteRepository extends JpaRepository<Site, Long> {
     List<Site> getByName(String name);
 
     @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value ="true") })
-    @Query(value = "SELECT DISTINCT s FROM Site s ORDER BY s.status DESC, s.name ASC")
+    @Query(value = "SELECT DISTINCT s FROM Site s WHERE (:url IS NULL OR s.url LIKE CONCAT('%',:url,'%'))")
+    List<Site> getByUrl(String url);
+
+    @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value ="true") })
+    @Query(value = "SELECT DISTINCT s FROM Site s WHERE (:url IS NULL OR s.url LIKE CONCAT('%',:url,'%')) AND s.online =:online")
+    List<Site> getByUrlAndOnline(String url, boolean online);
+
+    @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value ="true") })
+    @Query(value = "SELECT DISTINCT s FROM Site s WHERE s.verified = true ORDER BY s.online DESC, s.cantPing DESC, s.name ASC")
     List<Site> findAll();
+
+    @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value ="true") })
+    @Query(value = "SELECT DISTINCT s FROM Site s WHERE s.verified = true AND s.cantPing = false")
+    List<Site> findAllCanPing();
+
+    @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value ="true") })
+    @Query(value = "SELECT DISTINCT s FROM Site s WHERE s.verified = false ORDER BY s.id ASC")
+    List<Site> findAllUnverified();
 }

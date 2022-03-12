@@ -1,9 +1,6 @@
 package com.ddos.java.database.entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
@@ -15,6 +12,7 @@ import javax.persistence.*;
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
 @Table(name = "sites")
+@ToString
 public class Site {
     @Id
     @Column(name = "id")
@@ -24,9 +22,24 @@ public class Site {
     @Column
     private String name;
 
+    @Column
+    private String comment;
+
+    @Column
+    private String ip;
+
+    @Column
+    private String location;
+
     @Column(unique = true)
     private String url;
 
     @Column
-    private int status = 0;
+    private boolean verified = false;
+
+    @Column
+    private boolean cantPing = false;
+
+    @Column
+    private boolean online = false;
 }

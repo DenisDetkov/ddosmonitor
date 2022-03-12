@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en-GB" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<body style="display: flex; flex-direction: column">
+<div th:if="${ips != null}" th:each="ip: ${ips}" style="display: flex; margin-bottom: 10px">
+    <form th:action="'/api/admin/bannedIps/' + ${ip.id}" th:method="post">
+        <input type="hidden" name="id" th:value="${ip.id}">
+        <input
+                type="hidden"
+                th:name="${_csrf.parameterName}"
+                th:value="${_csrf.token}" />
+        <div style="display: flex">
+            <p th:text="${ip.ip}"></p><button style="margin-left: 20px" type="submit">Delete</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

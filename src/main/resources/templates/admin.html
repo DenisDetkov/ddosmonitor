@@ -1,28 +1,59 @@
 <!doctype html>
 <html lang="en-GB" dir="ltr" xmlns:th="http://www.thymeleaf.org">
-<form action="/api/admin/sites" th:object="${emptySite}" method="post">
-    <div style="display: flex"><p>Name: </p> <input type="text" th:field="*{name}"></div>
-    <div style="display: flex"><p>Url: </p> <input type="text" th:field="*{url}"></div>
+<body style="display: flex; flex-direction: column">
+<form action="/api/admin/sites" th:object="${emptySite}" method="post" style="margin-right: auto; margin-left: auto;align-items: end;display: flex;flex-direction: column;">
+    <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}" />
+    <div style="display: flex"><p>Name: </p> <input type="text" th:field="*{name}" style="width: 300px"></div>
+    <div style="display: flex"><p>Url: </p> <input type="text" th:field="*{url}" style="width: 300px"></div>
+    <div style="display: flex"><p>Comment: </p> <input type="text" th:field="*{comment}" style="width: 300px"></div>
+    <div style="display: flex;align-items: center;margin-right: auto;"><p>Cant ping: </p> <input type="checkbox" th:field="*{cantPing}"></div>
     <button type="submit">Submit</button>
 </form>
-<div style="display: flex">
+<div style="display: flex;margin-left: auto;margin-right: auto">
     <form method="post">
     <p>Find by name: </p>
     <input type="text" name="name">
+        <input
+                type="hidden"
+                th:name="${_csrf.parameterName}"
+                th:value="${_csrf.token}" />
     <button type="submit">Submit</button>
     </form>
 </div>
-<div th:if="${sites != null}" th:each="site: ${sites}" style="display: flex">
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px">
+    <div style="display: flex; margin-bottom: 10px">
+        <input type="text" name="name" disabled value="Name"/>
+        <input type="text" name="url" disabled value="Url"/>
+        <input type="text" name="comment" disabled value="Comment"/>
+        <p>Cant ping</p>
+    </div>
+<div th:if="${sites != null}" th:each="site: ${sites}" style="display: flex; margin-bottom: 10px">
     <form action="/api/admin/sites/" th:method="put">
+        <input
+                type="hidden"
+                th:name="${_csrf.parameterName}"
+                th:value="${_csrf.token}" />
         <input type="hidden" name="id" th:value="${site.id}">
-        <input type="hidden" name="status" th:value="${site.status}">
-        <input name="name" th:value="${site.name}"/>
-        <input name="url" th:value="${site.url}"/>
+        <input type="hidden" name="online" th:value="${site.online}">
+        <input type="hidden" name="verified" th:value="${site.verified}">
+        <input type="text" name="name" th:value="${site.name}"/>
+        <input type="text" name="url" th:value="${site.url}"/>
+        <input type="text" name="comment" th:value="${site.comment}"/>
+        <input type="checkbox" name="cantPing" th:checked="${site.cantPing}"/>
         <button type="submit">Change</button>
     </form>
-    <form th:action="'/api/admin/sites/' + ${site.id}" th:method="delete">
+    <form th:action="'/api/admin/sites/' + ${site.id}" th:method="post">
         <input type="hidden" name="id" th:value="${site.id}">
+        <input
+                type="hidden"
+                th:name="${_csrf.parameterName}"
+                th:value="${_csrf.token}" />
         <button type="submit">Delete</button>
     </form>
 </div>
+</div>
+</body>
 </html>
